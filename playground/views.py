@@ -3,8 +3,12 @@ from django.http import HttpResponse
 # Create your views here.
 #this page is a request handler
 # action..?
+def calculate():
+    x = 1
+    y = 2
+    return x
 
 def say_hello(request):
-    x = 1
+    x = calculate()
     y = 2
     return render(request, 'hello.html', {'name': 'Dennis'})
