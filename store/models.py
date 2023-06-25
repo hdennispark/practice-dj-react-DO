@@ -12,7 +12,6 @@ class Collection(models.Model):
     featured_product = models.ForeignKey('Product', on_delete=models.SET_NULL, null=True, related_name='+')
 
 class Product(models.Model):
-    sku = models.CharField(max_length=10, primary_key=True)
     title = models.CharField(max_length=255)
     slug = models.SlugField()
     description = models.TextField()
@@ -40,8 +39,6 @@ class Customer(models.Model):
     birth_date = models.DateField(null=True)
     membership = models.CharField(max_length=1, choices=MEMBERSHIP_CHOICES, default=MEMBERSHIP_BRONZE)
 
-class Cart(models.Model):
-    created_at = models.DateTimeField(auto_now_add=True)
 
 
 class Order(models.Model):
@@ -67,12 +64,14 @@ class OrderItem(models.Model):
     unit_price = models.DecimalField(max_digits=6, decimal_places=2)
     #prices change over time so price should be saved at time of order
 
-class CartItem(models.Model):
-    cart = models.ForeignKey(Cart, on_delete=models.CASCADE)
-    product = models.ForeignKey(Product, on_delete=models.CASCADE)
-    quantity = models.PositiveSmallIntegerField()
-
 class Address(models.Model):
     street = models.CharField(max_length=255)
     city = models.CharField(max_length=255)
     customer = models.ForeignKey(Customer, on_delete=models.CASCADE)
+class Cart(models.Model):
+    created_at = models.DateTimeField(auto_now_add=True)
+
+class CartItem(models.Model):
+    cart = models.ForeignKey(Cart, on_delete=models.CASCADE)
+    product = models.ForeignKey(Product, on_delete=models.CASCADE)
+    quantity = models.PositiveSmallIntegerField()

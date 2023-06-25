@@ -1,14 +1,11 @@
 from django.shortcuts import render
-from django.http import HttpResponse
-# Create your views here.
-#this page is a request handler
-# action..?
-def calculate():
-    x = 1
-    y = 2
-    return x
+from django.core.exceptions import ObjectDoesNotExist
+from store.models import Product
 
 def say_hello(request):
-    x = calculate()
-    y = 2
-    return render(request, 'hello.html', {'name': 'Dennis'})
+    #None
+    queryset = Product.objects.filter(title__icontains='coffee')
+
+
+
+    return render(request, 'hello.html', {'name': 'Dennis', 'products': list(queryset)})
